@@ -14,10 +14,13 @@ public class UnderwritingService {
 
     private final RiskFactorRepository riskRepo;
     private final UnderwritingRepository appRepo;
+    private final NotificationService notificationService;
 
-    public UnderwritingService(RiskFactorRepository riskRepo, UnderwritingRepository appRepo) {
+
+    public UnderwritingService(RiskFactorRepository riskRepo, UnderwritingRepository appRepo, NotificationService notificationService) {
         this.riskRepo = riskRepo;
         this.appRepo = appRepo;
+        this.notificationService=notificationService;
     }
 
     public UnderwritingApplication createApplication(UnderwritingApplication app) {
@@ -53,10 +56,21 @@ public class UnderwritingService {
 
         if (totalScore > 70) {
             app.setDecision(UnderwritingApplication.Decision.DECLINED);
+            app.setDecision(UnderwritingApplication.Decision.APPROVED);
+            notificationService.createNotification(
+            		app.getApplicationId(),
+                    "Your policy has been declined by underwriting.",
+                    "UNDERWRITING_DECLINED"
+            );
         } else if (totalScore > 40) {
             app.setDecision(UnderwritingApplication.Decision.REFERRED);
         } else {
             app.setDecision(UnderwritingApplication.Decision.APPROVED);
+            notificationService.createNotification(
+            		app.getApplicationId(),
+                    "Your policy has been approved by underwriting.",
+                    "UNDERWRITING_APPROVED"
+            );
         }
 
         app.setPremiumRecommended(5000 + (totalScore * 100));

@@ -11,14 +11,21 @@ import java.util.List;
 public class ClaimService {
 
     private final ClaimRepository repo;
+    private final NotificationService notificationService;
 
-    public ClaimService(ClaimRepository repo) {
+    public ClaimService(ClaimRepository repo, NotificationService notificationService) {
         this.repo = repo;
+        this.notificationService = notificationService;
     }
 
     public Claim submitClaim(Claim claim) {
         claim.setStatus(Claim.ClaimStatus.SUBMITTED);
         claim.setSubmissionDate(LocalDate.now());
+        notificationService.createNotification(
+                claim.getClaimId(),
+                "Your claim has been submitted successfully.",
+                "CLAIM_SUBMITTED"
+        );
         return repo.save(claim);
     }
 
@@ -66,6 +73,11 @@ public class ClaimService {
             throw new RuntimeException("Only UNDER_REVIEW claims can be approved");
         }
         claim.setStatus(Claim.ClaimStatus.APPROVED);
+        notificationService.createNotification(
+                claim.getClaimId(),
+                "Your claim has been approved successfully.",
+                "CLAIM_APPROVED"
+        );
         return repo.save(claim);
     }
 
@@ -76,6 +88,11 @@ public class ClaimService {
         }
         claim.setStatus(Claim.ClaimStatus.REJECTED);
         claim.setReason(reason);
+        notificationService.createNotification(
+                claim.getClaimId(),
+                "Your claim has been rejected.",
+                "CLAIM_REJECTED"
+        );
         return repo.save(claim);
     }
 
@@ -85,6 +102,11 @@ public class ClaimService {
             throw new RuntimeException("Only APPROVED claims can be settled");
         }
         claim.setStatus(Claim.ClaimStatus.SETTLED);
+        notificationService.createNotification(
+                claim.getClaimId(),
+                "Your claim has been settled successfully.",
+                "CLAIM_SETTLED"
+        );
         return repo.save(claim);
     }
 

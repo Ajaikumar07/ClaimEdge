@@ -28,13 +28,13 @@ public class PolicyService {
         return repo.findAll();
     }
 
-    public Policy getPolicy(Integer id) {
+    public Policy getPolicy(Long id) {
         return repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Policy not found: " + id));
     }
 
-    public Policy updatePolicy(Integer id, Policy updated) {
+    public Policy updatePolicy(Long id, Policy updated) {
         Policy policy = getPolicy(id);
         policy.setPolicyHolderId(updated.getPolicyHolderId());
         policy.setProductType(updated.getProductType());
@@ -50,11 +50,11 @@ public class PolicyService {
         return repo.save(policy);
     }
 
-    public void deletePolicy(Integer id) {
+    public void deletePolicy(Long id) {
         repo.delete(getPolicy(id));
     }
 
-    public Policy activatePolicy(Integer id) {
+    public Policy activatePolicy(Long id) {
         Policy policy = getPolicy(id);
         policy.setStatus("ACTIVE");
         notificationService.createNotification(
@@ -65,7 +65,7 @@ public class PolicyService {
         return repo.save(policy);
     }
 
-    public Policy lapsePolicy(Integer id) {
+    public Policy lapsePolicy(Long id) {
         Policy policy = getPolicy(id);
         policy.setStatus("LAPSED");
         notificationService.createNotification(
@@ -76,7 +76,7 @@ public class PolicyService {
         return repo.save(policy);
     }
 
-    public Policy cancelPolicy(Integer id) {
+    public Policy cancelPolicy(Long id) {
         Policy policy = getPolicy(id);
         policy.setStatus("CANCELLED");
         notificationService.createNotification(

@@ -9,7 +9,7 @@ public class Policy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer policyId;
+    private Long policyId;
 
     @Column(nullable = false)
     private Integer policyHolderId;
@@ -25,8 +25,8 @@ public class Policy {
     @Column(nullable = false)
     private String status = "DRAFT"; // DRAFT / ACTIVE / LAPSED / CANCELLED
 
-    public Integer getPolicyId() { return policyId; }
-    public void setPolicyId(Integer policyId) { this.policyId = policyId; }
+    public Long getPolicyId() { return policyId; }
+    public void setPolicyId(Long policyId) { this.policyId = policyId; }
 
     public Integer getPolicyHolderId() { return policyHolderId; }
     public void setPolicyHolderId(Integer policyHolderId) { this.policyHolderId = policyHolderId; }

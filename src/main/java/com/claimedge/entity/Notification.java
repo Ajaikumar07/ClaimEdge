@@ -11,7 +11,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notificationId;
 
-    private Integer userId;
+    private Long userId;
     private String message;
     private String category; // Policy / Claim / Payment / Fraud
     private String status = "UNREAD"; // UNREAD / READ / DISMISSED
@@ -26,8 +26,8 @@ public class Notification {
     public Long getNotificationId() { return notificationId; }
     public void setNotificationId(Long notificationId) { this.notificationId = notificationId; }
 
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }

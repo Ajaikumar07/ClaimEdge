@@ -17,7 +17,7 @@ public class NotificationController {
     }
 
     @PostMapping
-    public Notification create(@RequestParam Integer userId,
+    public Notification create(@RequestParam Long userId,
                                @RequestParam String message,
                                @RequestParam String category) {
         return service.createNotification(userId, message, category);

@@ -16,7 +16,7 @@ public class NotificationService {
         this.repo = repo;
     }
 
-    public Notification createNotification(Integer userId, String message, String category) {
+    public Notification createNotification(Long userId, String message, String category) {
         Notification n = new Notification();
         n.setUserId(userId);
         n.setMessage(message);
